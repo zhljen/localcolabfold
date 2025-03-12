@@ -30,6 +30,14 @@ conda activate "$COLABFOLDDIR/colabfold-conda"
 # reinstall colabfold
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts --upgrade --force-reinstall \
     "colabfold[alphafold] @ git+https://github.com/sokrypton/ColabFold"
-"$COLABFOLDDIR/colabfold-conda/bin/pip" install jax==0.4.23 jaxlib==0.4.23
-"$COLABFOLDDIR/colabfold-conda/bin/pip" install "colabfold[alphafold]"
+# Install latest JAX and JAXLIB (compatible with dm-haiku)
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-cache-dir --force-reinstall "jax==0.4.35" "jaxlib==0.4.35"
+
+# Reinstall ColabFold again to apply updates
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts "colabfold[alphafold]"
+
+# Install Silence TensorFlow to suppress warnings
 "$COLABFOLDDIR/colabfold-conda/bin/pip" install silence_tensorflow
+
+# Install dm-haiku 0.0.13 (fixes JAX issues)
+"$COLABFOLDDIR/colabfold-conda/bin/pip" install --no-warn-conflicts --upgrade "dm-haiku==0.0.13"
